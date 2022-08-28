@@ -7,6 +7,9 @@ inputs:
   playbook:
     description: Ansible playbook filepath
     required: true
+  python_requirements:
+    description: Python3 requirements filepath
+    required: false
   requirements:
     description: Ansible Galaxy requirements filepath
     required: false

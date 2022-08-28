@@ -7,6 +7,7 @@ const os = require('os')
 async function main() {
     try {
         const playbook = core.getInput("playbook", { required: true })
+        const python_requirements = core.getInput("python_requirements")
         const requirements = core.getInput("requirements")
         const directory = core.getInput("directory")
         const key = core.getInput("key")
@@ -26,6 +27,12 @@ async function main() {
         if (directory) {
             process.chdir(directory)
             core.saveState("directory", directory)
+        }
+
+        if (python_requirements) {
+            const pythonRequirementsContent = fs.readFileSync(python_requirements, 'utf8')
+            const pythonRequirementsObject = yaml.parse(pythonRequirementsContent)
+            await exec.exec("pip3", ["install", "-r", python_requirements])
         }
 
         if (requirements) {
